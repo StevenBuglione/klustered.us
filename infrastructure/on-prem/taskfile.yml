@@ -1,0 +1,66 @@
+version: '3'
+
+vars:
+  ANSIBLE_CONFIG: ./ansible/ansible.cfg
+  INVENTORY: ./ansible/inventories/inventory.yml
+  BECOME_PROMPT: --ask-become-pass
+
+tasks:
+  # Help commands
+  default:
+    desc: "List all available tasks"
+    cmds:
+      - go-task --list
+    silent: true
+
+  # Cluster management commands
+  create:
+    desc: "Create and configure k3s cluster on LXC/LXD"
+    summary: |
+      Creates a new k3s cluster using LXC containers with LXD and
+      configures the local environment to interact with it
+    cmds:
+#      - task: create_cluster
+      - ./join_lxd_cluster.sh
+      - task: tfad
+
+  destroy:
+    desc: "Tear down k3s LXC/LXD cluster"
+    env:
+      ANSIBLE_CONFIG: "{{.ANSIBLE_CONFIG}}"
+    cmds:
+      - task: tfdd
+      - ansible-playbook -i {{.INVENTORY}} ./ansible/playbooks/lxd_cluster_teardown.yml
+    interactive: true
+
+  create_cluster:
+    desc: "Deploy k3s on LXC containers with LXD"
+    env:
+      ANSIBLE_CONFIG: "{{.ANSIBLE_CONFIG}}"
+    cmds:
+      - ansible-playbook -i {{.INVENTORY}} ./ansible/playbooks/lxd_cluster_setup.yml
+    interactive: true
+
+  tfpd:
+    desc: "Terraform Plan Development Configuration"
+    cmds:
+      - cd terraform && terraform plan -var-file=./config/dev.tfvars
+
+  tfad:
+    desc: "Terraform Plan Development Configuration"
+    cmds:
+      - cd terraform && terraform apply -var-file=./config/dev.tfvars -auto-approve
+
+  tfdd:
+    desc: "Terraform Destroy Development Configuration (Auto-Approve)"
+    cmds:
+      - cd terraform && terraform destroy -var-file=./config/dev.tfvars -auto-approve
+
+  terragrunt-01-nas-services:
+    desc: "Run Terragrunt 01-nas-services"
+    cmds:
+      - dagger call
+          --interactive terragrunt-apply
+          --source .
+          --token=op://klustered.us/ci-ssh-key/private-key 
+          --token2="op://klustered.us/uaqvh6oi3efydillx4dc75cao4/credential"

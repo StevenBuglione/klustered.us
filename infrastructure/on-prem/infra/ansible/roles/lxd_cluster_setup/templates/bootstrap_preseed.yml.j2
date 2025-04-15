@@ -1,0 +1,25 @@
+config:
+  core.trust_password: "{{ lxd_cluster_password }}"
+  core.https_address: "{{ ansible_host }}:8443"
+  images.auto_update_interval: 15
+storage_pools:
+  - name: default
+    driver: dir
+# Remove the LXD-managed network since we’re using macvlan on the physical interface.
+# networks:  <== This section is no longer needed.
+profiles:
+  - name: default
+    devices:
+      root:
+        path: /
+        pool: default
+        type: disk
+      eth0:
+        name: eth0
+        nictype: macvlan
+        parent: eth0    # Use your actual physical interface here.
+        type: nic
+cluster:
+  server_name: "{{ server_name }}"
+  enabled: true
+

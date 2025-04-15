@@ -1,0 +1,18 @@
+---
+# Handle member servers first, then bootstrap servers
+- name: Clean up member servers
+  block:
+    - include_tasks: cleanup_dnsmasq.yml
+    - include_tasks: lxc.yml
+    - include_tasks: lxd.yml
+  when: inventory_hostname in groups['member_servers']
+
+- name: Clean up bootstrap server
+  block:
+    - include_tasks: cleanup_dnsmasq.yml
+    - include_tasks: lxc.yml
+    - include_tasks: lxd.yml
+  when: inventory_hostname in groups['bootstrap_server']
+
+- include_tasks: remove_macvlan.yml
+
