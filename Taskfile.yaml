@@ -5,11 +5,8 @@ dotenv:
 
 includes:
   infrastructure:on-prem: ./infrastructure/on-prem/Taskfile.yaml
-  infrastructure:cloud: ./infrastructure/cloud/Taskfile.yaml
   gitops:on-prem: ./gitops/on-prem/Taskfile.yaml
-  gitops:cloud: ./gitops/cloud/Taskfile.yaml
-  devops:on-prem: ./devops/on-prem/Taskfile.yaml
-  devops:cloud: ./devops/cloud/Taskfile.yaml
+  docker: ./docker/Taskfile.yaml
   applications: ./applications/Taskfile.yaml
 
 tasks:

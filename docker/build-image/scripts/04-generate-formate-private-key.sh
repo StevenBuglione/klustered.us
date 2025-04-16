@@ -37,3 +37,5 @@ EOF
 chmod +x "$SCRIPT_PATH"
 
 echo "$SCRIPT_NAME script created and added to /usr/bin. You can now execute it anywhere."
+
+echo "Updating Docker Image"

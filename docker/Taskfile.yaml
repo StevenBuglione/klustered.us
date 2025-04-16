@@ -1,0 +1,27 @@
+version: 3
+
+tasks:
+  default:
+    desc: "List all available tasks"
+    cmds:
+      - task --list-all
+    silent: true
+
+  build:
+    desc: "Build and push Docker image using Earthly"
+    silent: true
+    dir: '{{.ROOT_DIR}}/docker/build-image'
+    cmds:
+      - echo "{{.GITHUB_TOKEN}}" | docker login ghcr.io -u "{{.GITHUB_USERNAME}}" --password-stdin
+      - |
+        earthly --push ./+build \
+          --ALPINE_VERSION="{{.ALPINE_VERSION}}" \
+          --OPEN_TOFU_VERSION="{{.OPEN_TOFU_VERSION}}" \
+          --TERRAGRUNT_VERSION="{{.TERRAGRUNT_VERSION}}" \
+          --BUILD_IMAGE_NAME="{{.BUILD_IMAGE_NAME}}" \
+          --IMAGE_VERSION="{{.IMAGE_VERSION}}" \
+          --CONTAINER_LABEL="{{.CONTAINER_LABEL}}"
+
+
+
+

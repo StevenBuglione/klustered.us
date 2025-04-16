@@ -1,0 +1,30 @@
+VERSION 0.7
+
+build:
+    ARG ALPINE_VERSION
+    ARG OPEN_TOFU_VERSION
+    ARG TERRAGRUNT_VERSION
+    ARG BUILD_IMAGE_NAME
+    ARG IMAGE_VERSION
+    ARG CONTAINER_LABEL
+
+    FROM alpine:${ALPINE_VERSION}
+
+    LABEL org.opencontainers.image.source=${CONTAINER_LABEL}
+
+    COPY scripts /tmp
+
+    RUN chmod +x /tmp/*.sh
+
+    RUN /tmp/01-install-1password-cli.sh
+    RUN /tmp/02-install-open-tofu.sh ${OPEN_TOFU_VERSION}
+    RUN /tmp/03-install-terragrunt.sh ${TERRAGRUNT_VERSION}
+    RUN /tmp/04-generate-formate-private-key.sh
+
+    RUN rm -f /tmp/*.sh
+
+    SAVE IMAGE --push \
+      ${BUILD_IMAGE_NAME}:${IMAGE_VERSION} \
+      ${BUILD_IMAGE_NAME}:latest
+
+
