@@ -20,6 +20,7 @@ build:
     RUN /tmp/02-install-open-tofu.sh ${OPEN_TOFU_VERSION}
     RUN /tmp/03-install-terragrunt.sh ${TERRAGRUNT_VERSION}
     RUN /tmp/04-generate-formate-private-key.sh
+    RUN /tmp/05-install-ansible.sh
 
     RUN rm -f /tmp/*.sh
 
