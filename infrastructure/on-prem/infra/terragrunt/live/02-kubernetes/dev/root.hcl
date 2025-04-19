@@ -7,8 +7,8 @@ remote_state {
 
   config = {
     encrypt                            = false
-    endpoint                           = "http://10.10.10.7:9768"
-    bucket                             = "terraform-state-test"
+    endpoint                           = "http://10.10.10.7:9769"
+    bucket                             = "klustered.us"
     key                                = "${path_relative_to_include()}/terraform.tfstate"
     region                             = "us-east-1"
     disable_aws_client_checksums       = true

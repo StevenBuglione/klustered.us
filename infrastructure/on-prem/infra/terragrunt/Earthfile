@@ -1,5 +1,6 @@
 VERSION 0.7
 
+
 reconfigure-01-nas-server:
     FROM ghcr.io/stevenbuglione/build-image:latest
 
@@ -8,7 +9,7 @@ reconfigure-01-nas-server:
 
     RUN \
         --secret OP_SERVICE_ACCOUNT_TOKEN \
-        chmod +x /app/live/01-nas-services/op-secrets.sh && \
+        chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all init -reconfigure
 
@@ -20,7 +21,7 @@ plan-01-nas-server:
 
     RUN \
         --secret OP_SERVICE_ACCOUNT_TOKEN \
-        chmod +x /app/live/01-nas-services/op-secrets.sh && \
+        chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all plan
 
@@ -32,7 +33,7 @@ apply-01-nas-server:
 
     RUN \
         --secret OP_SERVICE_ACCOUNT_TOKEN \
-        chmod +x /app/live/01-nas-services/op-secrets.sh && \
+        chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all apply --non-interactive
 
@@ -45,7 +46,64 @@ destroy-01-nas-server:
 
     RUN \
         --secret OP_SERVICE_ACCOUNT_TOKEN \
-        chmod +x /app/live/01-nas-services/op-secrets.sh && \
+        chmod +x ./op-secrets.sh && \
+        source ./op-secrets.sh && \
+        terragrunt run-all destroy --non-interactive
+
+reconfigure-02-kubernetes:
+    FROM ghcr.io/stevenbuglione/build-image:latest
+
+    ENV OP_CONNECT_HOST="http://10.10.10.7:8080"
+
+    COPY . /app
+    WORKDIR /app/live/02-kubernetes/dev
+
+    RUN \
+        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        chmod +x ./op-secrets.sh && \
+        source ./op-secrets.sh && \
+        terragrunt run-all init -reconfigure
+
+plan-02-kubernetes:
+    FROM ghcr.io/stevenbuglione/build-image:latest
+
+    ENV OP_CONNECT_HOST="http://10.10.10.7:8080"
+
+    COPY . /app
+    WORKDIR /app/live/02-kubernetes/dev
+
+    RUN \
+        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        chmod +x ./op-secrets.sh && \
+        source ./op-secrets.sh && \
+        terragrunt run-all plan
+
+apply-02-kubernetes:
+    FROM ghcr.io/stevenbuglione/build-image:latest
+
+    ENV OP_CONNECT_HOST="http://10.10.10.7:8080"
+
+    COPY . /app
+    WORKDIR /app/live/02-kubernetes/dev
+
+    RUN \
+        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        chmod +x ./op-secrets.sh && \
+        source ./op-secrets.sh && \
+        terragrunt run-all apply --non-interactive
+
+
+destroy-01-nas-server:
+    FROM ghcr.io/stevenbuglione/build-image:latest
+
+    ENV OP_CONNECT_HOST="http://10.10.10.7:8080"
+
+    COPY . /app
+    WORKDIR /app/live/02-kubernetes/dev
+
+    RUN \
+        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all destroy --non-interactive
 

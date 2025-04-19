@@ -50,3 +50,47 @@ tasks:
           -i \
           --secret OP_SERVICE_ACCOUNT_TOKEN \
           +destroy-01-nas-server
+
+  reconfigure:02-kubernetes:
+    desc: "Terragrunt plan 02-kubernetes"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +reconfigure-02-kubernetes
+
+  plan:02-kubernetes:
+    desc: "Terragrunt plan 02-kubernetes"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +plan-02-kubernetes
+
+  apply:02-kubernetes:
+    desc: "Terragrunt plan 02-kubernetes"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +apply-02-kubernetes
+
+  destroy:02-kubernetes:
+    desc: "Terragrunt plan 01-nas-services"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +destroy-02-kubernetes
