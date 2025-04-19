@@ -19,7 +19,7 @@ provider "system" {
   ssh {
     user = "root"
     host = "10.10.10.7"
-    private_key = file("~/.ssh/ci-ssh-key")
+    private_key = file("~/.ssh/id_rsa")
   }
 }
 
@@ -28,7 +28,7 @@ provider "docker" {
   ssh_opts = [
     "-o", "StrictHostKeyChecking=no",
     "-o", "UserKnownHostsFile=/dev/null",
-    "-i", "~/.ssh/ci-ssh-key"
+    "-i", "~/.ssh/id_rsa"
   ]
 }
 

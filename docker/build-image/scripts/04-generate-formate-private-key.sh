@@ -15,7 +15,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-PRIVATE_KEY=$1
+PRIVATE_KEY="$1"
 SSH_DIR="$HOME/.ssh"
 KEY_FILE="$SSH_DIR/id_rsa"
 
@@ -23,14 +23,15 @@ KEY_FILE="$SSH_DIR/id_rsa"
 mkdir -p "$SSH_DIR"
 chmod 700 "$SSH_DIR"
 
-# Format the private key by replacing spaces with newlines where necessary
-FORMATTED_KEY=$(echo "$PRIVATE_KEY" | sed 's/ /\n/g' | sed '1n;$n')
+# Format the private key properly
+# Use echo with option -e to interpret backslash escapes
+# This allows proper handling of newlines in the key
+echo -e "$PRIVATE_KEY" > "$KEY_FILE"
 
-# Save the formatted key to the id_rsa file
-echo "$FORMATTED_KEY" > "$KEY_FILE"
+# Ensure the file has correct permissions
 chmod 600 "$KEY_FILE"
 
-echo "Private key saved and formatted successfully at $KEY_FILE"
+echo "Private key saved successfully at $KEY_FILE"
 EOF
 
 # Make the script executable

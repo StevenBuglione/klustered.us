@@ -1,0 +1,41 @@
+version: 3
+includes:
+tasks:
+  default:
+    desc: "List all available tasks"
+    cmds:
+      - task --list-all
+    silent: true
+
+  plan:01-nas-services:
+    desc: "Terragrunt plan 01-nas-services"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +plan-01-nas-server
+
+  apply:01-nas-services:
+    desc: "Terragrunt plan 01-nas-services"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +apply-01-nas-server
+
+  destroy:01-nas-services:
+    desc: "Terragrunt plan 01-nas-services"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +destroy-01-nas-server

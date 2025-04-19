@@ -21,8 +21,10 @@ build:
     RUN /tmp/03-install-terragrunt.sh ${TERRAGRUNT_VERSION}
     RUN /tmp/04-generate-formate-private-key.sh
     RUN /tmp/05-install-ansible.sh
+    RUN /tmp/06-install-openssh.sh
 
     RUN rm -f /tmp/*.sh
+
 
     SAVE IMAGE --push \
       ${BUILD_IMAGE_NAME}:${IMAGE_VERSION} \
