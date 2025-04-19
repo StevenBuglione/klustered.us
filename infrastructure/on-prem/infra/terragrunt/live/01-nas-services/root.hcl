@@ -7,18 +7,9 @@ remote_state {
 
   config = {
     bucket         = "klustered.us"
-    key            = "01-nas-services/terraform.tfstate"
+    key            = "01-nas-services/${path_relative_to_include()}/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
     dynamodb_table = "klustered.us-lock-table"
   }
-}
-
-terraform {
-  source = "../../infra//modules/nas-docker-services"
-}
-
-inputs = {
-  vault_name = "klustered.us"
-  secret_name = "1password-credentials"
 }

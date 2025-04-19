@@ -7,6 +7,17 @@ tasks:
       - task --list-all
     silent: true
 
+  reconfigure:01-nas-services:
+    desc: "Terragrunt plan 01-nas-services"
+    silent: true
+    dir: '{{.ROOT_DIR}}/infrastructure/on-prem/infra/terragrunt'
+    cmds:
+      - |
+        earthly \
+          -i \
+          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          +reconfigure-01-nas-server
+
   plan:01-nas-services:
     desc: "Terragrunt plan 01-nas-services"
     silent: true

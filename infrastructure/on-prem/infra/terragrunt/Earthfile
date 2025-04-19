@@ -1,5 +1,17 @@
 VERSION 0.7
 
+reconfigure-01-nas-server:
+    FROM ghcr.io/stevenbuglione/build-image:latest
+
+    COPY . /app
+    WORKDIR /app/live/01-nas-services
+
+    RUN \
+        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        chmod +x /app/live/01-nas-services/op-secrets.sh && \
+        source ./op-secrets.sh && \
+        terragrunt run-all init -reconfigure
+
 plan-01-nas-server:
     FROM ghcr.io/stevenbuglione/build-image:latest
 
