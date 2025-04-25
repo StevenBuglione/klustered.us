@@ -10,7 +10,7 @@ tasks:
   default:
     desc: "List all available tasks"
     cmds:
-      - go-task --list
+      - task --list
     silent: true
 
   # Cluster management commands
@@ -29,7 +29,6 @@ tasks:
     env:
       ANSIBLE_CONFIG: "{{.ANSIBLE_CONFIG}}"
     cmds:
-      - task: tfdd
       - ansible-playbook -i {{.INVENTORY}} ./ansible/playbooks/lxd_cluster_teardown.yml
     interactive: true
 

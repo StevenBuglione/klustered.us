@@ -3,7 +3,7 @@
   hosts: lxd_cluster
   become: yes
   roles:
-    - role: lxd_cluster_setup
+    - role: ../roles/lxd_cluster_setup
 
 
 

@@ -3,4 +3,4 @@
   hosts: lxd_cluster
   become: yes
   roles:
-    - role: lxd_cluster_teardown
+    - role: ../roles/lxd_cluster_teardown

@@ -31,3 +31,10 @@ terraform.rc
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+
+lxc-cluster-module/.terraform
+lxc-cluster-module/.terraform/*
+lxc-cluster-module/.terraform.lock.hcl
+lxc-cluster-module/terraform.tfstate
+lxc-cluster-module/terraform.tfstate.backup

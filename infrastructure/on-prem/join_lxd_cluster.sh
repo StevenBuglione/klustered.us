@@ -14,7 +14,7 @@ if ! command -v $OP_CMD &> /dev/null; then
     fi
 fi
 
-CLUSTER_PASSWORD=$($OP_CMD read "op://klustered.us/klustered-lxd-password/password")
+CLUSTER_PASSWORD=P@ssw0rd123!
 
 echo "Copying cluster certificate from bootstrap node..."
 if ! scp $USERNAME@$BOOTSTRAP_NODE:/var/snap/lxd/common/lxd/cluster.crt /tmp/bootstrap_cluster.crt; then
