@@ -9,7 +9,7 @@ module "lxd_cluster" {
     { name = "node1", address = "10.10.10.5", role = "master" },
     { name = "node2", address = "10.10.10.3", role = "worker" },
     { name = "node3", address = "10.10.10.4", role = "worker" },
-    # { name = "node4", address = "10.10.10.6", role = "worker" }
+    { name = "node4", address = "10.10.10.6", role = "worker" }
   ]
 
   ssh_user             = "sbuglione"                        # SSH username on the nodes
