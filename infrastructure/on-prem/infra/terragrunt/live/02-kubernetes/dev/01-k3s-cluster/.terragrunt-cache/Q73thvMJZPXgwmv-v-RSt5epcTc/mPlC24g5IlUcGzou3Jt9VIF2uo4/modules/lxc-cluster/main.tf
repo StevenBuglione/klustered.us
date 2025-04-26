@@ -114,16 +114,6 @@ resource "null_resource" "workers" {
     ssh_key_path = var.ssh_private_key_path
   }
 
-  # provisioner "local-exec" {
-  #   command = <<EOT
-  #     if [ ${count.index} -gt 0 ]; then
-  #       echo "Waiting for worker ${count.index - 1} to complete..."
-  #       # Sleep to ensure workers run sequentially
-  #       sleep 10
-  #     fi
-  #   EOT
-  # }
-
   // Create-time provisioner with its own connection
   provisioner "remote-exec" {
     when = create

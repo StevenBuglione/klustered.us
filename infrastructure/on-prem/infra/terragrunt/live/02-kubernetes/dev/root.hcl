@@ -9,7 +9,7 @@ remote_state {
     encrypt                            = false
     endpoint                           = "http://10.10.10.7:9769"
     bucket                             = "klustered.us"
-    key                                = "${path_relative_to_include()}/terraform.tfstate"
+    key                                = "02-kubernetes/${path_relative_to_include()}/terraform.tfstate"
     region                             = "us-east-1"
     disable_aws_client_checksums       = true
     skip_bucket_ssencryption           = true

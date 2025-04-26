@@ -59,7 +59,7 @@ tasks:
       - |
         earthly \
           -i \
-          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          --secret OP_CONNECT_TOKEN \
           +reconfigure-02-kubernetes
 
   plan:02-kubernetes:
@@ -70,7 +70,7 @@ tasks:
       - |
         earthly \
           -i \
-          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          --secret OP_CONNECT_TOKEN \
           +plan-02-kubernetes
 
   apply:02-kubernetes:
@@ -81,7 +81,7 @@ tasks:
       - |
         earthly \
           -i \
-          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          --secret OP_CONNECT_TOKEN \
           +apply-02-kubernetes
 
   destroy:02-kubernetes:
@@ -92,5 +92,5 @@ tasks:
       - |
         earthly \
           -i \
-          --secret OP_SERVICE_ACCOUNT_TOKEN \
+          --secret OP_CONNECT_TOKEN \
           +destroy-02-kubernetes

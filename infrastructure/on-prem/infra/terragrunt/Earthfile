@@ -59,7 +59,7 @@ reconfigure-02-kubernetes:
     WORKDIR /app/live/02-kubernetes/dev
 
     RUN \
-        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        --secret OP_CONNECT_TOKEN \
         chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all init -reconfigure
@@ -73,7 +73,7 @@ plan-02-kubernetes:
     WORKDIR /app/live/02-kubernetes/dev
 
     RUN \
-        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        --secret OP_CONNECT_TOKEN \
         chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all plan
@@ -87,13 +87,13 @@ apply-02-kubernetes:
     WORKDIR /app/live/02-kubernetes/dev
 
     RUN \
-        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        --secret OP_CONNECT_TOKEN \
         chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all apply --non-interactive
 
 
-destroy-01-nas-server:
+destroy-02-kubernetes:
     FROM ghcr.io/stevenbuglione/build-image:latest
 
     ENV OP_CONNECT_HOST="http://10.10.10.7:8080"
@@ -102,7 +102,7 @@ destroy-01-nas-server:
     WORKDIR /app/live/02-kubernetes/dev
 
     RUN \
-        --secret OP_SERVICE_ACCOUNT_TOKEN \
+        --secret OP_CONNECT_TOKEN \
         chmod +x ./op-secrets.sh && \
         source ./op-secrets.sh && \
         terragrunt run-all destroy --non-interactive

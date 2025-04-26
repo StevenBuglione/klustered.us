@@ -99,12 +99,43 @@ resource "null_resource" "master" {
   }
 }
 
+locals {
+  # master_node = element([for n in var.nodes : n if n.role == "master"], 0)
+  worker_nodes_list = [for n in var.nodes : n if n.role == "worker"]
+  worker_nodes_map = {
+    for i, node in local.worker_nodes_list :
+    node.name => {
+      node = node
+      index = i
+    }
+  }
+}
+
+# Create a chain of triggers for sequential execution
+resource "null_resource" "worker_sequence_trigger" {
+  for_each = local.worker_nodes_map
+
+  depends_on = [
+    null_resource.master,
+    # Each worker depends on the one before it
+      each.value.index == 0 ? null_resource.master : null_resource.workers[
+    local.worker_nodes_list[each.value.index - 1].name
+    ]
+  ]
+
+  # This resource exists only for dependency chaining
+  triggers = {
+    worker_name = each.key
+    index = each.value.index
+  }
+}
+
 // Join worker nodes to the cluster
 resource "null_resource" "workers" {
   for_each = { for node in var.nodes : node.name => node if node.role == "worker" }
   depends_on = [null_resource.master]
 
-  // Store values needed during destroy phase
+  # Execute only after the trigger for this worker has executed
   triggers = {
     node_name = each.value.name
     node_address = each.value.address
@@ -112,17 +143,9 @@ resource "null_resource" "workers" {
     master_name = local.master_node.name
     ssh_user = var.ssh_user
     ssh_key_path = var.ssh_private_key_path
+    # This creates the sequential dependency chain
+    sequence_trigger = null_resource.worker_sequence_trigger[each.key].id
   }
-
-  # provisioner "local-exec" {
-  #   command = <<EOT
-  #     if [ ${count.index} -gt 0 ]; then
-  #       echo "Waiting for worker ${count.index - 1} to complete..."
-  #       # Sleep to ensure workers run sequentially
-  #       sleep 10
-  #     fi
-  #   EOT
-  # }
 
   // Create-time provisioner with its own connection
   provisioner "remote-exec" {
