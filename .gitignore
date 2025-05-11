@@ -38,3 +38,7 @@ lxc-cluster-module/.terraform/*
 lxc-cluster-module/.terraform.lock.hcl
 lxc-cluster-module/terraform.tfstate
 lxc-cluster-module/terraform.tfstate.backup
+/infrastructure/on-prem/infra/terragrunt/live/02-kubernetes/dev/02-configure-argocd/.terragrunt-cache/
+/infrastructure/on-prem/infra/terragrunt/live/02-kubernetes/dev/02-configure-argocd/.terraform.lock.hcl
+/infrastructure/on-prem/infra/terragrunt/live/02-kubernetes/dev/01-install-argocd/.terragrunt-cache/
+/infrastructure/on-prem/infra/terragrunt/live/02-kubernetes/dev/01-install-argocd/.terraform.lock.hcl

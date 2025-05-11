@@ -1,11 +1,3 @@
-variable "lxd_provider_config"{
-  description = "Configuration required to configure the lxd provider remote configuration"
-  type = object({
-    name = string
-    address = string
-  })
-}
-
 variable "server_nodes" {
   type = list(object({
     name = string
@@ -23,33 +15,24 @@ variable "agent_nodes" {
   default = []
 }
 
-variable "lxc_cloud_init_configuration"{
-  description = "Configuration used to configure lxc cloud init image"
+variable "k3s_connection" {
   type = object({
-    user = object({
-      name = string
-      shell = string
-      sudo = string
-      ssh_authorized_key = list(string)
-    })
-    package_update = bool
-    package_upgrade = bool
-    packages = list(string)
-    runcmd = list(string)
+    user        = string
+    private_key = string
+    timeout     = string
   })
 }
 
-variable "lxc_network_gateway4"{
-  description = "Configuration for lxc instance gateway4 ip address"
-  type = string
+variable "k3s_install_env_vars" {
+  type    = map(string)
+  default = {}
 }
 
-variable "lxc_network_nameserver_addresses"{
-  description = "Configuration for lxc nameserver ip addresses"
-  type = list(string)
+variable "k3s_global_flags" {
+  type    = list(string)
+  default = ["--disable=traefik","--write-kubeconfig-mode=644"]
 }
 
-# variables.tf
 variable "argocd_admin_password" {
   description = "Argo CD admin user password (plaintext input, will be stored as bcrypt hash in cluster)"
   type        = string
@@ -64,4 +47,9 @@ variable "argo_project_dev_url"{
 variable "argo_root_app_dev_url"{
   description = "The raw git url to the argocd root app file"
   type = string
+}
+
+variable "k3s_version" {
+  type    = string
+  default = "latest"
 }

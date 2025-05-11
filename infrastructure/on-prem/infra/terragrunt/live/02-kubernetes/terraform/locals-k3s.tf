@@ -19,9 +19,7 @@ locals {
   }
 
   k3s_global_flags = [
-    "--flannel-iface eth0",
-    "--kubelet-arg=protect-kernel-defaults=false",
-    "--kubelet-arg=fail-swap-on=false"
+    "--flannel-iface eth0"
   ]
 
   k3s_install_env_vars = {

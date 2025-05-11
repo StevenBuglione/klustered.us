@@ -6,17 +6,10 @@ remote_state {
   }
 
   config = {
-    encrypt                            = false
-    endpoint                           = "http://10.10.10.7:9769"
-    bucket                             = "klustered.us"
-    key                                = "02-kubernetes/${path_relative_to_include()}/terraform.tfstate"
-    region                             = "us-east-1"
-    disable_aws_client_checksums       = true
-    skip_bucket_ssencryption           = true
-    skip_bucket_public_access_blocking = true
-    skip_bucket_enforced_tls           = true
-    skip_bucket_root_access            = true
-    skip_credentials_validation        = true
-    force_path_style                   = true
+    bucket         = "klustered.us"
+    key            = "01-k3s-cluster/${path_relative_to_include()}/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "klustered.us-lock-table"
   }
 }
