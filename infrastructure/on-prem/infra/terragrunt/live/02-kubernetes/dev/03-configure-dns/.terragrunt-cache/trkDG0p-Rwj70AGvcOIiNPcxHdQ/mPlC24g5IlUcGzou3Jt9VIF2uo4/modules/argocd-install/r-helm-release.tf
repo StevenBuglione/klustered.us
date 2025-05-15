@@ -7,5 +7,10 @@ resource "helm_release" "argocd" {
   create_namespace = true
 
   wait    = true
-  timeout = 600  # Wait up to 10 minutes for CRDs
+  timeout = 600
+
+  set {
+    name  = "server.extraArgs[0]"
+    value = "--insecure"
+  }
 }
